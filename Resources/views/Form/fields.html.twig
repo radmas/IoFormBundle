@@ -127,18 +127,16 @@
           <script>
           $(function() {
             $( "#{{ id }}" ).datepicker({
-                dateFormat: '{{ dateFormat }}',
-              {% for key,value in jqdate_options %}
-                {{key}}: '{{value}}',
-              {% endfor %}
-                {#changeMonth: {{ change_month }},#}
-                {#changeYear: {{ change_year }},#}
-                {#minDate: '{{ min_date }}',#}
-                {#maxDate: '{{ max_date }}',#}
-                {#yearRange: '{{ year_range }}',#}
-                {#showOn: '{{ show_on }}'#}
+                dateFormat: '{{ date_format }}',
+                changeMonth: {{ change_month }},
+                changeYear:  {{ change_year }},
+                minDate:  '{{ min_date }}',
+                maxDate:  '{{ max_date }}',
+                showOn: "both",
+                buttonImage: '{{ buttonImage }}'{% if buttonImage != '' %},
+                buttonImageOnly: true{% endif %}
               });
-             $( "#{{ id }}" ).datepicker("option", $.datepicker.regional[ "{{locale}}" ] );
+             $( "#{{ id }}" ).datepicker( $.datepicker.regional[ "{{locale}}" ] );
           });
           </script>
     {% else %}
@@ -200,6 +198,38 @@
           </script>
 
 {% endblock jquery_tinymce_widget %}
+
+{% block ewz_recaptcha_widget %}
+{% spaceless %}
+    {% if form.get('ewz_recaptcha_enabled') %}
+        {% if attr.options is defined %}
+            <script type="text/javascript">
+                var RecaptchaOptions = {{ attr.options|json_encode|raw }}
+            </script>
+        {% endif %}
+        <script src="{{ form.get('url_challenge') }}" type="text/javascript"></script>
+        <noscript>
+            <iframe src="{{ form.get('url_noscript') }}" height="300" width="500" frameborder="0"></iframe><br/>
+            <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+            <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+        </noscript>
+    {% endif %}
+{% endspaceless %}
+{% endblock ewz_recaptcha_widget %}
+
+{% block captcha_widget %}
+{% spaceless %}
+
+    <div style="display: inline-block">
+    <table>
+    <tr><td>
+    <img src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}" />
+    </td><td>
+    {{ form_widget(form) }}
+    </td></tr></table>
+    </div>
+{% endspaceless %}
+{% endblock %}
 
 
 {% block tinymce_configuration %}
