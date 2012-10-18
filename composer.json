@@ -19,5 +19,5 @@
     "autoload": {
         "psr-0": { "Io\\FormBundle": "" }
     },
-    "target-dir": "Io/Form/IoFormBundle"
+    "target-dir": "Io/IoFormBundle"
 }
