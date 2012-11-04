@@ -13,25 +13,23 @@ namespace Io\FormBundle\Form\Extension\Type;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class JqueryRadioType extends ChoiceType
-{
+class JqueryRadioType extends ChoiceType {
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
+    public function getName() {
         return 'jquery_radio';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
-    {
-      $options['expanded'] = true;
-      $options['multiple'] = false;
-      parent::buildForm($builder, $options);
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+        $options['expanded'] = true;
+        $options['multiple'] = false;
+        parent::buildForm($builder, $options);
     }
 }
